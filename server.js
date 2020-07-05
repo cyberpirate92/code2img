@@ -5,6 +5,11 @@ const puppeteer = require('puppeteer');
 var port = process.env.PORT || 3000;
 const hostname = `http://localhost:${port}`;
 const fs = require('fs');
+const { performance } = require('perf_hooks');
+const Nightmare = require('nightmare');
+const screenshotSelector = require('nightmare-screenshot-selector');
+
+Nightmare.action('screenshotSelector', screenshotSelector);
 
 const DEFAULTS = {
     VIEWPORT: {
@@ -69,11 +74,15 @@ app.get('/api/previewUrl', (request, response) => {
     });
 });
 
+
+// using puppeteer for rendering 
 app.post('/api/to-image', async (request, response) => {
     try {
+        const tStart = performance.now();
         console.log('');
-        console.log('🎉', request.url);
-
+        console.log('🎉 ', request.url);
+        console.log('🛠 ', `Rendering Method: Puppeteer, Chromium headless`);
+        
         const theme = request.query['theme'];
         const language = request.query['language'];
         const lineNumbers = request.query['line-numbers'];
@@ -82,43 +91,43 @@ app.post('/api/to-image', async (request, response) => {
         let scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
         
         if (typeof request.body != 'string') {
-            console.log('❌', 'Code snippet missing');
+            console.log('❌ ', 'Code snippet missing');
             sendErrorResponse(response, {
                 message: 'Code snippet missing, please include it in the request body',
             });
             return;
         }
-
+        
         if (!language || languages.indexOf(language) === -1) {
-            console.log('❌', !language ? 'Language not specified' : `Unknown language '${language}'`);
+            console.log('❌ ', !language ? 'Language not specified' : `Unknown language '${language}'`);
             sendErrorResponse(response, {
                 message: !language ? 'language missing: please specify a language' : `Unknown language '${language}'`,
                 availableLanguages: languages,
             });
             return;
         }
-
+        
         if (themes.indexOf(theme) === -1) {
-            console.log('❌', `Unknown theme '${theme}'`);
+            console.log('❌ ', `Unknown theme '${theme}'`);
             sendErrorResponse(response, {
                 message: `Unknown theme: '${theme}'`,
                 availableThemes: themes,
             });
             return;
         }
-
+        
         try {
             scaleFactor = parseInt(request.query['scale']) || DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
             scaleFactor = Math.min(Math.max(1, scaleFactor), 5); // Make sure number is in range between 1-5
         } catch (e) {
             scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
         }
-
-        console.log('ℹ️', `Theme: ${theme}`);
-        console.log('ℹ️', `Language: ${language}`);
-        console.log('ℹ️', `Line Numbers: ${lineNumbers}`);
-        console.log('ℹ️', `Scale Factor: ${scaleFactor}`);
-        console.log('ℹ️', `width: ${width}`);
+        
+        console.log('🛠 ', `Theme: ${theme}`);
+        console.log('🛠 ', `Language: ${language}`);
+        console.log('🛠 ', `Line Numbers: ${lineNumbers}`);
+        console.log('🛠 ', `Scale Factor: ${scaleFactor}`);
+        console.log('🛠 ', `width: ${width}`);
         
         try {
             width = Math.min(Math.abs(parseInt(request.query['width'])), 1920);
@@ -136,7 +145,7 @@ app.post('/api/to-image', async (request, response) => {
         const queryParamsString = queryParams.toString();
         const pageUrl = `${hostname}/?${queryParamsString}`;
         
-        console.log('ℹ️', 'Preview Page URL', pageUrl);
+        console.log('🛠 ', 'Preview Page URL', pageUrl);
         let browser = await puppeteer.launch({
             args: chromiumLaunchOptions
         });
@@ -154,6 +163,8 @@ app.post('/api/to-image', async (request, response) => {
         const codeView = await page.$('#container');
         var image = await codeView.screenshot();
         
+        console.log('⏰ ', `Operation finished in ${ toSeconds(performance.now() - tStart)} seconds`);
+        
         response.status(200);
         response.setHeader('Content-Type', 'image/png');
         response.send(image);
@@ -161,7 +172,102 @@ app.post('/api/to-image', async (request, response) => {
         await page.close();
         await browser.close();
     } catch (e) {
-        console.error(e);
+        console.error('❌ ', 'Uncaught Exception',e);
+    }
+});
+
+// using nightmare for rendering
+app.post('/api/to-image2', async (request, response) => {
+    const tStart = performance.now();
+    try {
+        console.log('');
+        console.log('🎉 ', request.url);
+        console.log('🛠 ', `Rendering Method: Nightmare, electron headless`);
+        
+        const theme = request.query['theme'];
+        const language = request.query['language'];
+        const lineNumbers = request.query['line-numbers'];
+        
+        let width = DEFAULTS.VIEWPORT.WIDTH;
+        let scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
+        
+        if (typeof request.body != 'string') {
+            console.log('❌ ', 'Code snippet missing');
+            sendErrorResponse(response, {
+                message: 'Code snippet missing, please include it in the request body',
+            });
+            return;
+        }
+        
+        if (!language || languages.indexOf(language) === -1) {
+            console.log('❌ ', !language ? 'Language not specified' : `Unknown language '${language}'`);
+            sendErrorResponse(response, {
+                message: !language ? 'language missing: please specify a language' : `Unknown language '${language}'`,
+                availableLanguages: languages,
+            });
+            return;
+        }
+        
+        if (themes.indexOf(theme) === -1) {
+            console.log('❌ ', `Unknown theme '${theme}'`);
+            sendErrorResponse(response, {
+                message: `Unknown theme: '${theme}'`,
+                availableThemes: themes,
+            });
+            return;
+        }
+        
+        try {
+            scaleFactor = parseInt(request.query['scale']) || DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
+            scaleFactor = Math.min(Math.max(1, scaleFactor), 5); // Make sure number is in range between 1-5
+        } catch (e) {
+            scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
+        }
+        
+        console.log('🛠 ', `Theme: ${theme}`);
+        console.log('🛠 ', `Language: ${language}`);
+        console.log('🛠 ', `Line Numbers: ${lineNumbers}`);
+        console.log('🛠 ', `Scale Factor: ${scaleFactor}`);
+        console.log('🛠 ', `width: ${width}`);
+        
+        try {
+            width = Math.min(Math.abs(parseInt(request.query['width'])), 1920);
+        } catch (exception) {
+            console.warn('Invalid width', exception);
+            width = DEFAULTS.VIEWPORT.WIDTH;
+        }
+        
+        let queryParams = new URLSearchParams();
+        theme && queryParams.set('theme', theme);
+        language && queryParams.set('language', language);
+        queryParams.set('line-numbers', lineNumbers === 'true' ? lineNumbers : 'false');
+        queryParams.set('code', request.body);
+        
+        const queryParamsString = queryParams.toString();
+        const pageUrl = `${hostname}/?${queryParamsString}`;
+        
+        console.log('🛠 ', 'Preview Page URL', pageUrl);
+        let nightmare = new Nightmare({
+            show: false,
+        });
+        nightmare.viewport(width || DEFAULTS.VIEWPORT.WIDTH, DEFAULTS.VIEWPORT.HEIGHT);
+        nightmare
+        .goto(pageUrl)
+        .screenshotSelector('#container')
+        .then(image => {
+            console.log('⏰ ', `Operation finished in ${ toSeconds(performance.now() - tStart)} seconds`);
+            response.status(200);
+            response.setHeader('Content-Type', 'image/png');
+            response.send(image);
+            nightmare.end();
+        }).catch(error => {
+            console.log('⏰ ', `Operation finished in ${ toSeconds(performance.now() - tStart)} seconds`);
+            console.log('❌ ', 'Nightmare operation error', error);
+            nightmare.end();
+        });
+    } catch (e) {
+        console.log('⏰ ', `Operation finished in ${ toSeconds(performance.now() - tStart)} seconds`);
+        console.error('❌ ', 'Uncaught Exception', e);
     }
 });
 
@@ -171,6 +277,11 @@ function sendErrorResponse(response, responseObject) {
     response.send(responseObject ? JSON.stringify(responseObject) : null);
 }
 
+function toSeconds(ms) {
+    const x = ms/1000;
+    return x.toFixed(2);
+}
+
 http.listen(port, () => {
-    console.log('✅', 'listening on *:' + port);
+    console.log('✅ ', 'listening on *:' + port);
 });
