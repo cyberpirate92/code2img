@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "700f5bfe-5147-4658-9b1a-d776a55c9100",
+		"name": "code2img",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "/*\n * 🔥🔥 FizzBuzz sample 🔥🔥\n */\nconsole.log(\n  Array.apply(null, {length: 100}).map(function(val, index) {\n    index++;\n    if (index % 15 == 0){return \"FizzBuzz\";}\n    if (index % 3 == 0){return \"Fizz\";}\n    if (index % 5 == 0){return \"Buzz\";}\n    return index;\n  }).join('\\n')\n);\n"
+				},
+				"url": {
+					"raw": "localhost:3000/api/to-image?language=css&theme=nord&line-numbers=false",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"to-image"
+					],
+					"query": [
+						{
+							"key": "language",
+							"value": "css"
+						},
+						{
+							"key": "theme",
+							"value": "nord"
+						},
+						{
+							"key": "line-numbers",
+							"value": "false"
+						},
+						{
+							"key": "scale",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Provide code snippet in the request body."
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of available themes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:3000/api/themes"
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of available languages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:3000/api/languages"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
