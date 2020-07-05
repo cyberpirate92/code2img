@@ -10,7 +10,9 @@
   "author": "",
   "license": "GPL V3",
   "dependencies": {
+    "dom-to-image": "^2.6.0",
     "express": "^4.17.1",
+    "jsdom": "^16.2.2",
     "puppeteer": "^5.0.0"
   }
 }
