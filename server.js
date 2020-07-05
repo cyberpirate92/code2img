@@ -72,7 +72,7 @@ app.get('/api/previewUrl', (request, response) => {
     });
 });
 
-app.post('/api/to-image', async (request, response) => {
+app.post('/api/to-image2', async (request, response) => {
     try {
         console.log('');
         console.log('🎉', request.url);
@@ -171,7 +171,7 @@ app.post('/api/to-image', async (request, response) => {
     }
 });
 
-app.post('/api/to-image2', async (request, response) => {
+app.post('/api/to-image', async (request, response) => {
     try {
         console.log('');
         console.log('🎉', request.url);
