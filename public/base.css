@@ -1,5 +1,6 @@
 body {
     display: inline-block;
+    font-family: 'Inconsolata', monospace;
 }
 
 pre[class*="language-"].line-numbers {
