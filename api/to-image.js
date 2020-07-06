@@ -1,5 +1,5 @@
-const chromium = require('chrome-aws-lambda');
 const { themes } = require('../themes');
+const chromium = require('chrome-aws-lambda');
 const { performance } = require('perf_hooks');
 const { languages } = require('../languages');
 
@@ -35,10 +35,11 @@ function sendErrorResponse(response, responseObject) {
 
 module.exports = async (request, response) => {
     try {
-        const hostname = process.env.VERCEL_URL || "http://localhost:3000";
+        const hostname =  process.env.NODE_ENV === 'production' ? "https://code2img.vercel.app" : "http://localhost:3000";
         const tStart = performance.now();
         console.log('');
         console.log('🎉 ', request.url);
+        console.log('🛠 ', `Environment: ${process.env.NODE_ENV}`);
         console.log('🛠 ', `Rendering Method: Puppeteer, Chromium headless`);
         console.log('🛠 ', `Hostname: ${hostname}`);
         
