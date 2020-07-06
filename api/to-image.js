@@ -105,6 +105,10 @@ module.exports = async (request, response) => {
         const queryParamsString = queryParams.toString();
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;
         
+        const fontUrl = `https://${hostname}/fonts/NotoColorEmoji.ttf`;
+        console.log('🛠 ', `Loading ${fontUrl}`);
+        await chromium.font(fontUrl);
+
         console.log('🛠 ', 'Preview Page URL', pageUrl);
         let browser = await chromium.puppeteer.launch({
             args: chromium.args,
