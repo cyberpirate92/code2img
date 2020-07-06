@@ -24,6 +24,7 @@ function toSeconds(ms) {
 
 function sendErrorResponse(response, responseObject) {
     response.status(400);
+    response.setHeader('Access-Control-Allow-Origin', '*');
     response.json(responseObject);
 }
 
@@ -131,6 +132,7 @@ module.exports = async (request, response) => {
         
         response.status(200);
         response.setHeader('Content-Type', 'image/png');
+        response.setHeader('Access-Control-Allow-Origin', '*');
         response.send(image);
         
         await page.close();
