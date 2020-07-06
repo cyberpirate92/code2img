@@ -3,8 +3,6 @@ const { themes } = require('../themes');
 const { performance } = require('perf_hooks');
 const { languages } = require('../languages');
 
-const hostname = process.env.VERCEL_URL || "http://localhost:3000";
-
 const DEFAULTS = {
     VIEWPORT: {
         WIDTH: 1000,
@@ -37,10 +35,12 @@ function sendErrorResponse(response, responseObject) {
 
 module.exports = async (request, response) => {
     try {
+        const hostname = process.env.VERCEL_URL || "http://localhost:3000";
         const tStart = performance.now();
         console.log('');
         console.log('🎉 ', request.url);
         console.log('🛠 ', `Rendering Method: Puppeteer, Chromium headless`);
+        console.log('🛠 ', `Hostname: ${hostname}`);
         
         const theme = request.query['theme'];
         const language = request.query['language'];
