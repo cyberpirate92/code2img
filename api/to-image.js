@@ -12,15 +12,9 @@ const DEFAULTS = {
     INDEX_PAGE: 'preview.html',
 };
 
-const chromiumLaunchOptions = [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-accelerated-2d-canvas',
-    '--no-first-run',
-    '--no-zygote',
-    '--single-process',
-    '--disable-gpu',
+const fonts = [
+    "Inconsolata.ttf",
+    "NotoColorEmoji.ttf",
 ];
 
 function toSeconds(ms) {
@@ -105,9 +99,11 @@ module.exports = async (request, response) => {
         const queryParamsString = queryParams.toString();
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;
         
-        const fontUrl = `${hostname}/fonts/NotoColorEmoji.ttf`;
-        console.log('🛠 ', `Loading ${fontUrl}`);
-        await chromium.font(fontUrl);
+        fonts.forEach(async (font) => {
+            const fontUrl = `${hostname}/fonts/${font}`;
+            console.log('🛠 ', `Loading ${fontUrl}`);
+            await chromium.font(fontUrl);
+        });
 
         console.log('🛠 ', 'Preview Page URL', pageUrl);
         let browser = await chromium.puppeteer.launch({

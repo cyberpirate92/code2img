@@ -12,7 +12,6 @@ An API to get pretty images of code snippets with syntax highlighting created us
 | Technology | Description                                                                           | Link ↘️                 |
 | ---------- | ------------------------------------------------------------------------------------- | ----------------------- |
 | CSS3       | Cascading Style Sheets                                                                | https://developer.mozilla.org/en-US/docs/Web/CSS                    |
-| Express       | Web Framework for Node.js                                                          | https://expressjs.com/  |
 | HTML5      | Hyper Text Markup Language                                                            | https://developer.mozilla.org/en-US/docs/Web/HTML                    |
 | JavaScript | High Level, Dynamic, Interpreted Language                                             | https://developer.mozilla.org/en-US/docs/Web/JavaScript                    |
 | NodeJS     | Open Source, Javascript Run Time Environment, Execute Javascript code for server side | https://nodejs.org/en/  |
@@ -40,7 +39,7 @@ npm install
 3. Run the dev server
 
 ```bash
-npm run dev
+NODE_ENV=development vercel dev
 ```
 
 The app will now be running at https://localhost:3000
