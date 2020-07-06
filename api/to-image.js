@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const chromium = require('chrome-aws-lambda');
 const { themes } = require('../themes');
 const { performance } = require('perf_hooks');
 const { languages } = require('../languages');
@@ -105,11 +105,15 @@ module.exports = async (request, response) => {
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;
         
         console.log('🛠 ', 'Preview Page URL', pageUrl);
-        let browser = await puppeteer.launch({
-            args: chromiumLaunchOptions
+        let browser = await chromium.puppeteer.launch({
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            headless: true,
+            ignoreHTTPSErrors: true,
         });
+
         const page = await browser.newPage();
-        
         await page.setViewport({ 
             deviceScaleFactor: scaleFactor, 
             width: width || DEFAULTS.VIEWPORT.WIDTH, 

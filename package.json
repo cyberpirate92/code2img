@@ -10,7 +10,11 @@
   "author": "",
   "license": "GPL V3",
   "dependencies": {
-    "puppeteer": "^5.0.0",
+    "chrome-aws-lambda": "^3.1.1",
+    "puppeteer-core": "^3.0.1",
     "vercel": "^19.1.1"
+  },
+  "devDependencies": {
+    "puppeteer": "^5.0.0"
   }
 }
