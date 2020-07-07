@@ -41,6 +41,10 @@ module.exports = async (request, response) => {
         const theme = request.query['theme'];
         const language = request.query['language'];
         const lineNumbers = request.query['line-numbers'];
+        const backgroundPadding = request.query['padding'] || '';
+        const backgroundColor = request.query["background-color"] || '';
+        const backgroundImage = request.query["background-image"] || '';
+        const showBackground = request.query["show-background"] || 'true';
         
         let width = DEFAULTS.VIEWPORT.WIDTH;
         let scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
@@ -70,6 +74,15 @@ module.exports = async (request, response) => {
             });
             return;
         }
+
+        if (backgroundPadding) {
+            try {
+                let padding = parseInt(backgroundPadding);
+                backgroundPadding = Math.min(Math.max(0, padding), 10); // Make sure number is in range between 1-10
+            } catch (error) {
+                backgroundPadding = '';
+            }
+        }
         
         try {
             scaleFactor = parseInt(request.query['scale']) || DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
@@ -83,6 +96,10 @@ module.exports = async (request, response) => {
         console.log('🛠 ', `Line Numbers: ${lineNumbers}`);
         console.log('🛠 ', `Scale Factor: ${scaleFactor}`);
         console.log('🛠 ', `width: ${width}`);
+        console.log('🛠 ', `Background Color: ${backgroundColor}`);
+        console.log('🛠 ', `Background Image: ${backgroundImage}`);
+        console.log('🛠 ', `Show Background: ${showBackground}`);
+        console.log('🛠 ', `Background Padding: ${backgroundPadding}`);
         
         try {
             width = Math.min(Math.abs(parseInt(request.query['width'])), 1920);
@@ -96,6 +113,10 @@ module.exports = async (request, response) => {
         language && queryParams.set('language', language);
         queryParams.set('line-numbers', lineNumbers === 'true' ? lineNumbers : 'false');
         queryParams.set('code', request.body);
+        queryParams.set('background-image', backgroundImage);
+        queryParams.set('background-color', backgroundColor);
+        queryParams.set('show-background', showBackground);
+        queryParams.set('padding', backgroundPadding);
         
         const queryParamsString = queryParams.toString();
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;

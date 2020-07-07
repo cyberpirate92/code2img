@@ -12,14 +12,13 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "/*\n * 🔥🔥 FizzBuzz sample 🔥🔥\n */\nconsole.log(\n  Array.apply(null, {length: 100}).map(function(val, index) {\n    index++;\n    if (index % 15 == 0){return \"FizzBuzz\";}\n    if (index % 3 == 0){return \"Fizz\";}\n    if (index % 5 == 0){return \"Buzz\";}\n    return index;\n  }).join('\\n')\n);\n"
+					"raw": "/*\n * 🔥🔥 Generated using code2img 🔥🔥\n */\nimport java.util.*; \nclass FizzBuzz \n{ \n    public static void main(String args[]) \n    {  \n        int n = 100; \n  \n        // loop for 100 times \n        for (int i=1; i<=n; i++)                                  \n        { \n            if (i%15==0)                                                  \n                System.out.print(\"FizzBuzz\"+\" \");  \n            // number divisible by 5, print 'Buzz'  \n            // in place of the number \n            else if (i%5==0)      \n                System.out.print(\"Buzz\"+\" \");  \n  \n            // number divisible by 3, print 'Fizz'  \n            // in place of the number \n            else if (i%3==0)      \n                System.out.print(\"Fizz\"+\" \");  \n  \n            // number divisible by 15(divisible by \n            // both 3 & 5), print 'FizzBuzz' in  \n            // place of the number \n                  \n            else // print the numbers \n                System.out.print(i+\" \");                          \n        } \n    } \n} "
 				},
 				"url": {
-					"raw": "localhost:3000/api/to-image?language=css&theme=nord&line-numbers=false",
+					"raw": "{{baseUrl}}/api/to-image?language=java&theme=atom-dark&line-numbers=false&background-color=radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)&background-image=https://picsum.photos/1920/1080&padding=4",
 					"host": [
-						"localhost"
+						"{{baseUrl}}"
 					],
-					"port": "3000",
 					"path": [
 						"api",
 						"to-image"
@@ -27,20 +26,45 @@
 					"query": [
 						{
 							"key": "language",
-							"value": "css"
+							"value": "java",
+							"description": "Name of the programming language"
 						},
 						{
 							"key": "theme",
-							"value": "nord"
+							"value": "atom-dark",
+							"description": "Name of the color theme"
 						},
 						{
 							"key": "line-numbers",
-							"value": "false"
+							"value": "false",
+							"description": "Show/Hide line numbers . Default is false"
 						},
 						{
 							"key": "scale",
 							"value": "2",
+							"description": "Image Quality, should be in the range 1-5. Default is 2",
 							"disabled": true
+						},
+						{
+							"key": "background-color",
+							"value": "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)",
+							"description": "Any valid value for the css property background. Example: \"red\", \"rgb(0, 255, 0)\", etc"
+						},
+						{
+							"key": "background-image",
+							"value": "https://picsum.photos/1920/1080",
+							"description": "URL for background image"
+						},
+						{
+							"key": "show-background",
+							"value": "false",
+							"description": "Show/Hide background",
+							"disabled": true
+						},
+						{
+							"key": "padding",
+							"value": "4",
+							"description": "Padding between background and the window outline"
 						}
 					]
 				},
@@ -53,7 +77,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "localhost:3000/api/themes"
+				"url": "{{baseUrl}}/api/themes"
 			},
 			"response": []
 		},
@@ -62,7 +86,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "localhost:3000/api/languages"
+				"url": "{{baseUrl}}/api/languages"
 			},
 			"response": []
 		}

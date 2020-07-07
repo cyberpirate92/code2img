@@ -1,40 +1,26 @@
-const queryParams = new URLSearchParams(window.location.search);
+/**
+ * @typedef {Object} Views
+ * @property {HTMLElement} code
+ * @property {HTMLDivElement} background
+ * @property {HTMLPreElement} codeContainer
+ */
 
-const DEFAULTS = {
-    FONT_SIZE: '13px',
-    THEME: 'vsc-dark-plus',
-};
+/**
+ * @typedef {Object} RenderOptions
+ * @property {string} code Text of the code snippet
+ * @property {string} language Name of the programming language
+ * @property {string} theme Name of the color theme
+ * @property {Object} background Background view options
+ * @property {string} background.color Any valid value for CSS background-color property
+ * @property {stirng} background.image Image URL
+ * @property {boolean} background.enabled Show/Hide background view
+ * @property {boolean} showLineNumbers Show/Hide line numbers
+ */
 
-let theme = queryParams.get('theme') || DEFAULTS.THEME;
-const code = queryParams.get('code');
-const language = queryParams.get('language');
-const codeView = document.querySelector('#code');
-const codeContainer = document.querySelector('#code-container');
-const showLineNumbers = queryParams.has('line-numbers') && queryParams.get('line-numbers') === 'true';
-
-if (language) {
-    codeContainer.classList.add(`language-${language}`);
-}
-
-if (showLineNumbers) {
-    codeContainer.classList.add('line-numbers');
-}
-
-injectTheme(theme);
-injectStylesheetForTheme('./base.css');
-
-if (code) {
-    codeView.textContent = code;
-    console.log('code set');
-} else {
-    codeView.textContent = 'No code snippet provided';
-    console.warn('code not set');
-}
-
-console.log(`Theme: ${theme}`);
-console.log(`Language: ${language}`);
-console.log(`Line Numbers: ${showLineNumbers}`);
-
+/**
+ * Add a link tag with provided stylesheet URL in <head>
+ * @param {string} stylesheetUrl 
+ */
 function injectStylesheetForTheme(stylesheetUrl) {
     let link = document.createElement('link');
     link.href = stylesheetUrl;
@@ -42,8 +28,73 @@ function injectStylesheetForTheme(stylesheetUrl) {
     document.head.appendChild(link);
 }
 
+/**
+ * Inject specified theme's css stylesheet into page
+ * @param {string} themeName 
+ */
 function injectTheme(themeName) {
     injectStylesheetForTheme(`./prism-themes/prism-${themeName}.css`);
 }
 
+const DEFAULTS = {
+    FONT_SIZE: '13px',
+    THEME: 'vsc-dark-plus',
+    SHOW_BACKGROUND: true,
+    BACKGROUND: 'rgb(248, 231, 28)',
+    BACKGROUND_PADDING_REM: "5",
+};
+
+/** @type {Views} */
+const views = {
+    code: document.querySelector('#code'),
+    background: document.querySelector('.background'),
+    codeContainer: document.querySelector('#code-container'),
+};
+
+const queryParams = new URLSearchParams(window.location.search);
+
+/** @type {RenderOptions} */
+const options = {
+    code: queryParams.get('code'),
+    language: queryParams.get('language'),
+    theme: queryParams.get('theme') || DEFAULTS.THEME,
+    background: {
+        image: queryParams.get('background-image'),
+        color: queryParams.get('background-color') || BACKGROUND,
+        padding: queryParams.get('padding') || DEFAULTS.BACKGROUND_PADDING_REM,
+        enabled: queryParams.has('show-background') ? queryParams.get('show-background') === 'true' : DEFAULTS.SHOW_BACKGROUND,
+    },
+    showLineNumbers: queryParams.has('line-numbers') && queryParams.get('line-numbers') === 'true',
+};
+
+console.info(options);
+
+if (options.language) {
+    views.codeContainer.classList.add(`language-${options.language}`);
+}
+
+if (options.showLineNumbers) {
+    views.codeContainer.classList.add('line-numbers');
+}
+
+if (options.background.enabled) {
+    if (options.background.color) {
+        views.background.style.background = options.background.color;
+    }
+
+    if (options.background.image) {
+        views.background.style.backgroundImage = `url(${options.background.image})`;
+    }
+
+    if (options.background.padding) {
+        views.background.style.padding = `${options.background.padding}rem`;
+    }
+} else {
+    views.background.style.padding = "0px";
+}
+
+injectTheme(options.theme);
+injectStylesheetForTheme('./base.css');
+
+views.code.textContent = options.code || "No code snippet provided";
 window.LOAD_COMPLETE = true;

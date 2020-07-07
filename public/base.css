@@ -56,7 +56,6 @@ pre[class*="language-"].line-numbers > code {
     border: 0.5px solid #777;
 }
 .background {
-    background: rgb(248, 231, 28);
     padding: 5rem;
     text-align: center;
 }

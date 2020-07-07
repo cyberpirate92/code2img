@@ -13,6 +13,7 @@ A REST API to get pretty images of code snippets with syntax highlighting create
 2. [Installation](#Installation)
 3. [Using the API](#Using%20The%20API)
 4. [API Documentation](#API%20Documentation)
+5. [Extensions](#Extensions)
 
 ## Tech Used
 | Technology | Description                                                                           | Link ↘️                 |
@@ -57,8 +58,9 @@ The app will now be running at https://localhost:3000
 Postman is an API client that makes API testing easy.
 
 1. Download and install Postman from https://www.postman.com/downloads/
-2. Open Postman and import the file `Postman/code2img.postman_collection.json`.
-3. In the code2img collection, you can find the requests
+2. Open Postman and import the `Postman` folder.
+3. In the `environment` dropdown, select `code2img-local` if you are running the app locally, otherwise select `code2img-prod`.
+4. You can find the API operations in the sidebar under `code2img`.
 
 ## API Documentation
 
@@ -77,12 +79,16 @@ The API supports the following 3 operations
 
 **Query Parameters**
 
-| Parameter | Description                                                                           | Possible values                 |
-| ---------- | ------------------------------------------------------------------------------------- | ----------------------- |
-| theme       | The name of the color theme. All the color themes are from  https://github.com/PrismJS/prism-themes                                                                | `a11y-dark`, `atom-dark`, `base16-ateliersulphurpool.light`, `cb`, `darcula`, `default`, `dracula`, `duotone-dark`, `duotone-earth`, `duotone-forest`, `duotone-light`, `duotone-sea`, `duotone-space`, `ghcolors`, `hopscotch`, `material-dark`, `material-light`, `material-oceanic`, `nord`, `pojoaque`, `shades-of-purple`, `synthwave84`, `vs`, `vsc-dark-plus`, `xonokai`                     |
-| language | The name of the programming language. This will be used for syntax highlighting                                                                           | `c`, `css`, `cpp`, `go`, `html`, `java`, `javascript`, `python`, `rust`, `typescript`                 |
-| line-numbers | Show/Hide line numbers. Defaults to `false`.                                                                           | `true`, `false`                 |
-| scale | The device scale factor used to render the image. Higher values will lead to bigger image resolutions and higher file sizes. Default value is `2` | Any value in the inclusive range `1`-`5` |
+| Parameter | Required? | Data type | Description                                                                           | Possible/Example values                 |
+| ----------| --------- | ----------|  ------------------------------------------------------------------------------------- | ----------------------- |
+| theme | required | `string` | The name of the color theme. All the color themes are from  https://github.com/PrismJS/prism-themes  | `a11y-dark`, `atom-dark`, `base16-ateliersulphurpool.light`, `cb`, `darcula`, `default`, `dracula`, `duotone-dark`, `duotone-earth`, `duotone-forest`, `duotone-light`, `duotone-sea`, `duotone-space`, `ghcolors`, `hopscotch`, `material-dark`, `material-light`, `material-oceanic`, `nord`, `pojoaque`, `shades-of-purple`, `synthwave84`, `vs`, `vsc-dark-plus`, `xonokai` |
+| language | required | `string` | The name of the programming language. This will be used for syntax highlighting. | `c`, `css`, `cpp`, `go`, `html`, `java`, `javascript`, `python`, `rust`, `typescript` |
+| line-numbers | optional. Default = `false` | `string` | Show/Hide line numbers. | `true` / `false` |
+| scale | optional. Default = `2` | `number` | The device scale factor used to render the image. Higher values will lead to bigger image resolutions and higher file sizes. Default value is `2` | Any number in the inclusive range `1`-`5` |
+| background-color | optional. Default = `yellow` | `string` | Set a background color. Any valid values used for css [`background`](https://developer.mozilla.org/en-US/docs/Web/CSS/background) property can be used. Alternatively, If a background image is required, use  `background-image` instead. | `red`, `#f00`, `#ff0000` `rgb(255, 0, 0)`, `rgba(255, 0, 0, 0.6)`, `radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)` |
+| background-image | optional | `string` | Set a background image. Any valid image URL can be used. Higher resolution images can cause response to be significantly delayed. | `https://picsum.photos/1920/1080` |
+| show-background | optional. Default = `true` | `string` | Show/Hide background. | `true` / `false` |
+| padding | optional. Default = `5` | `number` | Amount of padding in the background. Setting `padding` to `0` is equivalent to setting `show-background=false`. | Any number in the inclusive range `0`-`15` |
 
 **Description:** Given a code snippet in the request body, an image will be returned with the specified theme and language options.
 
@@ -99,3 +105,6 @@ The API supports the following 3 operations
 - Response Content Type: `application/json`
 
 **Description:** Get a list of all supported languages.
+
+## Extensions
+- [Google Chrome Extension](https://github.com/cyberpirate92/code2img-chrome)
