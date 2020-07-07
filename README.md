@@ -16,13 +16,15 @@ A REST API to get pretty images of code snippets with syntax highlighting create
 5. [Extensions](#Extensions)
 
 ## Tech Used
-| Technology | Description                                                                           | Link ↘️                 |
+| Technology | Description                                                                           | Link                  |
 | ---------- | ------------------------------------------------------------------------------------- | ----------------------- |
 | CSS3       | Cascading Style Sheets                                                                | https://developer.mozilla.org/en-US/docs/Web/CSS                    |
 | HTML5      | Hyper Text Markup Language                                                            | https://developer.mozilla.org/en-US/docs/Web/HTML                    |
 | JavaScript | High Level, Dynamic, Interpreted Language                                             | https://developer.mozilla.org/en-US/docs/Web/JavaScript                    |
-| NodeJS     | Open Source, Javascript Run Time Environment, Execute Javascript code for server side | https://nodejs.org/en/  |
+| NodeJS     | Open Source Javascript Runtime Environment, Execute Javascript code server side | https://nodejs.org/en/  |
+| PrismJS  | Lightweight, extensible syntax highlighter for the web | https://prismjs.com |
 | Puppeteer       | Node library which provides a high-level API to control Chromium over the DevTools protocol | https://pptr.dev |
+| Vercel CLI | Run Vercel serverless functions locally | https://vercel.com/docs/cli |
 
 ## Installation
 

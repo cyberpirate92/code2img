@@ -38,13 +38,13 @@ module.exports = async (request, response) => {
         console.log('🛠 ', `Rendering Method: Puppeteer, Chromium headless`);
         console.log('🛠 ', `Hostname: ${hostname}`);
         
-        const theme = request.query['theme'];
-        const language = request.query['language'];
-        const lineNumbers = request.query['line-numbers'];
-        const backgroundPadding = request.query['padding'] || '';
-        const backgroundColor = request.query["background-color"] || '';
-        const backgroundImage = request.query["background-image"] || '';
-        const showBackground = request.query["show-background"] || 'true';
+        let theme = request.query['theme'];
+        let language = request.query['language'];
+        let lineNumbers = request.query['line-numbers'];
+        let backgroundPadding = request.query['padding'] || '';
+        let backgroundColor = request.query["background-color"] || '';
+        let backgroundImage = request.query["background-image"] || '';
+        let showBackground = request.query["show-background"] || 'true';
         
         let width = DEFAULTS.VIEWPORT.WIDTH;
         let scaleFactor = DEFAULTS.VIEWPORT.DEVICE_SCALE_FACTOR;
