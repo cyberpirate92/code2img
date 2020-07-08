@@ -28,6 +28,18 @@ function sendErrorResponse(response, responseObject) {
     response.json(responseObject);
 }
 
+/**
+ * Trim end of lines if it is a multi line string
+ * @type {string} 
+ */
+function trimLineEndings(text) {
+    let trimmedText = text;
+    if (text && typeof text === 'string') {
+        trimmedText = text.split('\n').map(line => line.trimEnd()).join('\n');
+    }
+    return trimmedText;
+}
+
 module.exports = async (request, response) => {
     try {
         const hostname =  process.env.NODE_ENV === 'production' ? "https://code2img.vercel.app" : "http://localhost:3000";
@@ -107,12 +119,14 @@ module.exports = async (request, response) => {
             console.warn('Invalid width', exception);
             width = DEFAULTS.VIEWPORT.WIDTH;
         }
+
+        let trimmedCodeSnippet = trimLineEndings(request.body);
         
         let queryParams = new URLSearchParams();
         theme && queryParams.set('theme', theme);
         language && queryParams.set('language', language);
         queryParams.set('line-numbers', lineNumbers === 'true' ? lineNumbers : 'false');
-        queryParams.set('code', request.body);
+        queryParams.set('code', trimmedCodeSnippet);
         queryParams.set('background-image', backgroundImage);
         queryParams.set('background-color', backgroundColor);
         queryParams.set('show-background', showBackground);
