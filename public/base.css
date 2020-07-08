@@ -1,6 +1,6 @@
 body {
     display: inline-block;
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Source Code Pro', 'Inconsolata', monospace !important;
 }
 
 pre[class*="language-"].line-numbers {
