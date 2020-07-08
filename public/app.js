@@ -63,7 +63,7 @@ const options = {
     theme: queryParams.get('theme') || DEFAULTS.THEME,
     background: {
         image: queryParams.get('background-image'),
-        color: queryParams.get('background-color') || BACKGROUND,
+        color: queryParams.get('background-color') || DEFAULTS.BACKGROUND,
         padding: queryParams.get('padding') || DEFAULTS.BACKGROUND_PADDING_REM,
         enabled: queryParams.has('show-background') ? queryParams.get('show-background') === 'true' : DEFAULTS.SHOW_BACKGROUND,
     },
