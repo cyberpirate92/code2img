@@ -3,6 +3,8 @@
  * @property {HTMLElement} code
  * @property {HTMLDivElement} background
  * @property {HTMLPreElement} codeContainer
+ * @property {HTMLDivElement} windowHeader
+ * @property {HTMLDivElement} window
  */
 
 /**
@@ -49,6 +51,7 @@ const views = {
     code: document.querySelector('#code'),
     background: document.querySelector('.background'),
     codeContainer: document.querySelector('#code-container'),
+    windowHeader: document.querySelector('#header'),
 };
 
 const queryParams = new URLSearchParams(window.location.search);
@@ -73,10 +76,6 @@ if (options.language) {
     views.codeContainer.classList.add(`language-${options.language}`);
 }
 
-if (options.showLineNumbers) {
-    views.codeContainer.classList.add('line-numbers');
-}
-
 if (options.background.enabled) {
     if (options.background.color) {
         views.background.style.background = options.background.color;
@@ -96,5 +95,12 @@ if (options.background.enabled) {
 injectTheme(options.theme);
 injectStylesheetForTheme('./base.css');
 
-views.code.textContent = options.code || "No code snippet provided";
+if (!options.showLineNumbers) {
+    views.codeContainer.classList.remove('line-numbers');
+}
+
+if (options.code) {
+    views.code.textContent = options.code;
+}
+
 window.LOAD_COMPLETE = true;

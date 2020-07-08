@@ -74,7 +74,7 @@ module.exports = async (request, response) => {
             });
             return;
         }
-
+        
         if (backgroundPadding) {
             try {
                 let padding = parseInt(backgroundPadding);
@@ -126,7 +126,7 @@ module.exports = async (request, response) => {
             console.log('🛠 ', `Loading ${fontUrl}`);
             await chromium.font(fontUrl);
         });
-
+        
         console.log('🛠 ', 'Preview Page URL', pageUrl);
         let browser = await chromium.puppeteer.launch({
             args: chromium.args,
@@ -135,18 +135,32 @@ module.exports = async (request, response) => {
             headless: true,
             ignoreHTTPSErrors: true,
         });
-
+        
         const page = await browser.newPage();
+        await page.goto(pageUrl);
+        
         await page.setViewport({ 
             deviceScaleFactor: scaleFactor, 
             width: width || DEFAULTS.VIEWPORT.WIDTH, 
             height: DEFAULTS.VIEWPORT.HEIGHT, 
             isMobile: false 
         });
-        await page.goto(pageUrl);
+        
         await page.waitForFunction('window.LOAD_COMPLETE === true');
         
-        const codeView = await page.$('#container');
+        // set window header background same as the body
+        await page.evaluate(() => {
+            let background = '';
+            const codeContainer = document.getElementById('code-container');
+            const windowHeader = document.getElementById('header');
+            if (codeContainer && windowHeader) {
+                background = window.getComputedStyle(codeContainer, null).getPropertyValue('background');
+                windowHeader.style.background = background;
+            }
+            return background;
+        });
+        
+        const codeView = await page.$(showBackground ? '#container' : '#window');
         var image = await codeView.screenshot();
         
         console.log('⏰ ', `Operation finished in ${ toSeconds(performance.now() - tStart)} seconds`);

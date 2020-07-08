@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Preview</title>
+    <script src="./prism.js"></script>
+</head>
+<body>
+    <div class="background" id="container">
+        <div class="window-outline">
+            <div class="window-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg>
+            </div>
+            <div class="window-body">
+                <!-- Add to pre if soft-wrap required: style="white-space:pre-wrap;" -->
+                <pre id="code-container" style="border-radius: 0; white-space:pre-wrap;" class="line-numbers"><code id="code">/*
+* 🔥🔥 Generated using code2img 🔥🔥
+*/
+import java.util.*; 
+class FizzBuzz
+{
+    public static void main(String args[])
+    {
+        int n = 100;
+
+        // loop for 100 times
+        for (int i=1; i<=n; i++)
+        {
+            if (i%15==0)
+                System.out.print("FizzBuzz"+" ");
+            // number divisible by 5, print 'Buzz'
+            // in place of the number
+            else if (i%5==0)
+                System.out.print("Buzz"+" ");
+    
+            // number divisible by 3, print 'Fizz'
+            // in place of the number
+            else if (i%3==0)
+                System.out.print("Fizz"+" ");
+    
+            // number divisible by 15(divisible by
+            // both 3 & 5), print 'FizzBuzz' in
+            // place of the number
+                    
+            else // print the numbers
+                System.out.print(i+" ");
+        }
+    }
+}</code></pre>
+                <script src="./app.js" type="text/javascript"></script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

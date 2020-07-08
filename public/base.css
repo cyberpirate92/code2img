@@ -62,8 +62,14 @@ pre[class*="language-"].line-numbers > code {
 pre#code-container {
     margin-top: 0px;
     margin-bottom: 0px;
+    text-align: left;
+    border: 0;
+    padding-top: 0.25rem;
+    padding-bottom: 0.5rem;
+    padding-right: 5rem;
 }
 .window-outline {
     box-shadow: 0 0 10px black;
     display: inline-block;
+    min-width: 650px;
 }
