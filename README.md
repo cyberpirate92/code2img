@@ -1,4 +1,6 @@
-# code2img [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]() [![GitHub license](https://img.shields.io/github/license/cyberpirate92/code2img.svg)](https://github.com/cyberpirate92/code2img/blob/master/LICENSE) ![Website](https://img.shields.io/website?down_color=red&down_message=down&label=code2img.vercel.app&up_color=green&up_message=live%20%F0%9F%8E%89&url=https%3A%2F%2Fimg.shields.io%2Fwebsite%2Fhttps%2Fcode2img.vercel.app)
+# code2img 
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]() [![GitHub license](https://img.shields.io/github/license/cyberpirate92/code2img.svg)](https://github.com/cyberpirate92/code2img/blob/master/LICENSE) ![Website](https://img.shields.io/website?down_color=red&down_message=down&label=code2img.vercel.app&up_color=green&up_message=live%20%F0%9F%8E%89&url=https%3A%2F%2Fimg.shields.io%2Fwebsite%2Fhttps%2Fcode2img.vercel.app)
 
 A REST API to get pretty images of code snippets with syntax highlighting created using Puppeteer, PrismJS and Vercel.
 

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {  
+  "scripts": {
+    "test": "mocha -r esm --timeout 10000"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,10 @@
     "vercel": "^19.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "esm": "^3.2.25",
+    "mocha": "^8.0.1",
     "puppeteer": "^5.0.0"
   }
 }
