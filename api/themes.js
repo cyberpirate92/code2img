@@ -4,6 +4,6 @@ module.exports = (request, response) => {
     console.log('🎉 ', request.url);
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.json({
-        themes
+        themes:  themes.map(i => i.themeName),
     });
 }

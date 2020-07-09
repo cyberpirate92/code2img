@@ -78,11 +78,11 @@ module.exports = async (request, response) => {
             return;
         }
         
-        if (themes.indexOf(theme) === -1) {
+        if (!themes.find(t => t.themeName === theme)) {
             console.log('❌ ', `Unknown theme '${theme}'`);
             sendErrorResponse(response, {
                 message: `Unknown theme: '${theme}'`,
-                availableThemes: themes,
+                availableThemes: themes.map(i => i.themeName),
             });
             return;
         }

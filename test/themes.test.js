@@ -14,7 +14,7 @@ describe('/api/themes', () => {
             expect(res).to.have.status(200);
             expect(res).to.have.header('content-type', 'application/json; charset=utf-8');
             expect(res.body).to.haveOwnProperty('themes');
-            expect(res.body.themes).to.have.all.members(themes);
+            expect(res.body.themes).to.have.all.members(themes.map(t => t.themeName));
             done();
         });
     });

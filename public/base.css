@@ -1,6 +1,5 @@
 body {
     display: inline-block;
-    font-family: 'Source Code Pro', 'Inconsolata', monospace;
 }
 
 pre[class*="language-"].line-numbers {
@@ -67,10 +66,8 @@ pre#code-container {
     padding-top: 0.25rem;
     padding-bottom: 0.5rem;
     padding-right: 5rem;
-    font-family: inherit !important;
 }
 code {
-    font-family: inherit !important; 
 }
 .window-outline {
     box-shadow: 0 0 10px black;
