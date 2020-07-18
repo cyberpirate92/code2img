@@ -151,17 +151,10 @@ module.exports = async (request, response) => {
         });
         
         const page = await browser.newPage();
-        await page.goto(pageUrl);
-        
-        await page.setViewport({ 
-            deviceScaleFactor: scaleFactor, 
-            width: width || DEFAULTS.VIEWPORT.WIDTH, 
-            height: DEFAULTS.VIEWPORT.HEIGHT, 
-            isMobile: false 
+        await page.goto(pageUrl, {
+            waitUntil: 'networkidle2',
         });
-        
-        await page.waitForFunction('window.LOAD_COMPLETE === true');
-        
+
         // set window header background same as the body
         await page.evaluate(() => {
             let background = '';
@@ -172,6 +165,13 @@ module.exports = async (request, response) => {
                 windowHeader.style.background = background;
             }
             return background;
+        });
+        
+        await page.setViewport({ 
+            deviceScaleFactor: scaleFactor, 
+            width: width || DEFAULTS.VIEWPORT.WIDTH, 
+            height: DEFAULTS.VIEWPORT.HEIGHT, 
+            isMobile: false 
         });
         
         const codeView = await page.$(showBackground ? '#container' : '#window');
