@@ -13,8 +13,7 @@ const DEFAULTS = {
 };
 
 const fonts = [
-    "Inconsolata.ttf",
-    "NotoColorEmoji.ttf",
+    "https://gitcdn.xyz/repo/googlefonts/noto-emoji/master/fonts/NotoColorEmoji.ttf",
 ];
 
 function toSeconds(ms) {
@@ -78,13 +77,18 @@ module.exports = async (request, response) => {
             return;
         }
         
-        if (!themes.find(t => t.themeName === theme)) {
+        let themeDefinition = themes.find(t => t.themeName === theme);
+        let fontOverride;
+        if (!themeDefinition) {
             console.log('❌ ', `Unknown theme '${theme}'`);
             sendErrorResponse(response, {
                 message: `Unknown theme: '${theme}'`,
                 availableThemes: themes.map(i => i.themeName),
             });
             return;
+        } else {
+            fonts.push(themeDefinition.fontUrl);
+            fontOverride = themeDefinition.fontName;
         }
         
         if (backgroundPadding) {
@@ -112,6 +116,7 @@ module.exports = async (request, response) => {
         console.log('🛠 ', `Background Image: ${backgroundImage}`);
         console.log('🛠 ', `Show Background: ${showBackground}`);
         console.log('🛠 ', `Background Padding: ${backgroundPadding}`);
+        console.log('🛠 ', `Font Override: ${fontOverride}`);
         
         try {
             width = Math.min(Math.abs(parseInt(request.query['width'])), 1920);
@@ -131,12 +136,12 @@ module.exports = async (request, response) => {
         queryParams.set('background-color', backgroundColor);
         queryParams.set('show-background', showBackground);
         queryParams.set('padding', backgroundPadding);
+        queryParams.set('font-override', fontOverride);
         
         const queryParamsString = queryParams.toString();
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;
         
-        fonts.forEach(async (font) => {
-            const fontUrl = `${hostname}/fonts/${font}`;
+        fonts.forEach(async (fontUrl) => {
             console.log('🛠 ', `Loading ${fontUrl}`);
             await chromium.font(fontUrl);
         });

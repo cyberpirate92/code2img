@@ -68,9 +68,16 @@ const options = {
         enabled: queryParams.has('show-background') ? queryParams.get('show-background') === 'true' : DEFAULTS.SHOW_BACKGROUND,
     },
     showLineNumbers: queryParams.has('line-numbers') && queryParams.get('line-numbers') === 'true',
+    fontOverride: queryParams.get('font-override'),
 };
 
 console.info(options);
+
+if (options.fontOverride) {
+    let style = document.createElement('style');
+    style.innerHTML = `code#code { font-family: '${options.fontOverride}', ${window.getComputedStyle(views.code, null).getPropertyValue('font-family')}; }`;
+    document.head.appendChild(style);
+}
 
 if (options.language) {
     views.codeContainer.classList.add(`language-${options.language}`);
