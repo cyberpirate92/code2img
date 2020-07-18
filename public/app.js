@@ -85,7 +85,9 @@ if (options.background.enabled) {
         views.background.style.backgroundImage = `url(${options.background.image})`;
     }
     
-    views.background.style.padding = `${options.background.padding}rem`;
+    if (options.background.padding) {
+        views.background.style.padding = `${options.background.padding}rem`;
+    }
     
 } else {
     views.background.style.padding = "0px";
