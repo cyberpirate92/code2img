@@ -10,15 +10,15 @@
   "author": "",
   "license": "GPL V3",
   "dependencies": {
-    "chrome-aws-lambda": "^3.1.1",
-    "puppeteer-core": "^3.0.1",
-    "vercel": "^19.1.1"
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer-core": "^10.2.0",
+    "vercel": "^23.1.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "esm": "^3.2.25",
-    "mocha": "^8.0.1",
-    "puppeteer": "^5.0.0"
+    "mocha": "^9.0.3",
+    "puppeteer": "^10.2.0"
   }
 }
