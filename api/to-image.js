@@ -16,7 +16,13 @@ const fonts = [
     "Inconsolata.ttf",
     "NotoColorEmoji.ttf",
     "FiraCode-Regular.ttf",
-    "FiraCode-Bold.ttf"
+    "FiraCode-Bold.ttf",
+    "DejaVuSansMono.ttf",
+    "DejaVuSansMono-Bold.ttf",
+    "UbuntuMono-Regular.ttf",
+    "UbuntuMono-Bold.ttf",
+    "RobotoMono-Bold.ttf",
+    "RobotoMono-Regular.ttf"
 ];
 
 function toSeconds(ms) {
