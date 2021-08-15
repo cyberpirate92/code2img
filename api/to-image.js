@@ -15,6 +15,8 @@ const DEFAULTS = {
 const fonts = [
     "Inconsolata.ttf",
     "NotoColorEmoji.ttf",
+    "FiraCode-Regular.ttf",
+    "FiraCode-Bold.ttf"
 ];
 
 function toSeconds(ms) {
@@ -136,7 +138,7 @@ module.exports = async (request, response) => {
         const pageUrl = `${hostname}/preview.html?${queryParamsString}`;
         
         fonts.forEach(async (font) => {
-            const fontUrl = `${hostname}/fonts/${font}`;
+            const fontUrl = `https://raw.githack.com/cyberpirate92/code2img/master/public/fonts/${font}`;
             console.log('🛠 ', `Loading ${fontUrl}`);
             await chromium.font(fontUrl);
         });
